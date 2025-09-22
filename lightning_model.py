@@ -1,5 +1,6 @@
 import pytorch_lightning as pl
 import torch
+import torchmetrics
 
 def physics_loss(pred, true, lam=0.1):
     mse = torch.mean((pred - true)**2)
@@ -29,8 +30,8 @@ class LorenzLightningModule(pl.LightningModule):
             loss = torch.mean((y_hat - y)**2)
         else:  # physics guided
             loss = physics_loss(y_hat, y, lam=self.lam)
-        rmse_val = self.rmse(y_hat, y[:, -1])
-        acc_val = self.acc(y_hat, y[:, -1])
+        rmse_val = self.rmse(y_hat, y)
+        acc_val = self.acc(y_hat, y)
         self.log(f"train_loss", loss)
         self.log(f"train_rmse", rmse_val)
         self.log(f"train_ACC", acc_val)
