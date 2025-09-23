@@ -28,7 +28,7 @@ def ODE_loss(pred, pre_gt, dt):
     return loss
 
 class LorenzLightningModule(pl.LightningModule):
-    def __init__(self, model, lr=1e-3, lam=0.1, mode="naive"):
+    def __init__(self, model, lr=1e-3, lam=1, mode="naive"):
         super().__init__()
         self.model = model
         self.lr = lr
